@@ -1,5 +1,5 @@
 public class LinkedListDeque<T> {
-    public class InNode {
+    private class InNode {
         private InNode prev;
         private T x;
         private InNode next;
@@ -19,18 +19,6 @@ public class LinkedListDeque<T> {
         first.prev = first;
         first.next = first;
         size = 0;
-    }
-
-    public LinkedListDeque(LinkedListDeque other) {
-        InNode p = other.first.next;
-        first = new InNode(null, null, null);
-        first.next = first;
-        first.prev = first;
-        while (p != other.first) {
-            addLast(p.x);
-            p = p.next;
-        }
-        size = other.size;
     }
 
     public void addFirst(T item) {
@@ -121,7 +109,7 @@ public class LinkedListDeque<T> {
         return helper(index, first.next);
     }
 
-    public T helper(int index, InNode p) {
+    private T helper(int index, InNode p) {
         if (index == 0) {
             return p.x;
         } else {
@@ -129,19 +117,5 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> lst = new LinkedListDeque<>();
-        lst.addFirst(1);
-        lst.addLast(2);
-        lst.addFirst(0);
-        lst.addLast(3);
-        lst.addLast(4);
-        lst.addFirst(-1);
-        System.out.println(lst.getRecursive(0));
-        System.out.println(lst.getRecursive(3));
-        LinkedListDeque<Integer> other = new LinkedListDeque<>(lst);
-        other.printDeque();
-        lst.printDeque();
-    }
 }
 

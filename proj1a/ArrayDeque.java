@@ -1,15 +1,15 @@
-public class ArrayDeque<Item> {
-    private Item[] arr;
+public class ArrayDeque<T> {
+    private T[] arr;
     private int size = 0;
     private int nextFirst = 0;
     private int nextLast = 1;
     private static final int MIN_INITIAL_CAPACITY = 8;
 
     public ArrayDeque() {
-        arr =  (Item[]) new Object[MIN_INITIAL_CAPACITY];
+        arr =  (T[]) new Object[MIN_INITIAL_CAPACITY];
     }
 
-    public void addFirst(Item item) {
+    public void addFirst(T item) {
         if (item == null) {
             throw new NullPointerException();
         }
@@ -25,7 +25,7 @@ public class ArrayDeque<Item> {
         }
     }
 
-    public void addLast(Item item) {
+    public void addLast(T item) {
         if (item == null) {
             throw new NullPointerException();
         }
@@ -60,17 +60,17 @@ public class ArrayDeque<Item> {
 
     }
 
-    public Item removeFirst() {
+    public T removeFirst() {
         if (size == 0) {
             return null;
         }
-        Item item;
+        T item;
         if (nextFirst == arr.length - 1) {
-            item = (Item) arr[0];
+            item = (T) arr[0];
             arr[0] = null;
             nextFirst = 0;
         } else {
-            item = (Item) arr[nextFirst + 1];
+            item = (T) arr[nextFirst + 1];
             arr[nextFirst + 1] = null;
             nextFirst += 1;
         }
@@ -86,18 +86,18 @@ public class ArrayDeque<Item> {
     }
 
     //Removes and returns the item at the back of the Deque. If no such item exists, returns null.
-    public Item removeLast() {
+    public T removeLast() {
         if (size == 0) {
             return null;
         }
-        Item item;
+        T item;
         if (nextLast == 0) {
-            item = (Item) arr[arr.length - 1];
+            item = (T) arr[arr.length - 1];
             arr[arr.length - 1] = null;
             nextLast = arr.length - 1;
             //return item;
         } else {
-            item = (Item) arr[nextLast - 1];
+            item = (T) arr[nextLast - 1];
             arr[nextLast - 1] = null;
             nextLast -= 1;
             //return item;
@@ -115,7 +115,7 @@ public class ArrayDeque<Item> {
 
     public void resize(int capacity) {
         int n = arr.length;
-        Item[] a = (Item[]) new Object[capacity];
+        T[] a = (T[]) new Object[capacity];
         int pointer = 0;
         while (arr[pointer] == null) {
             pointer++;
@@ -126,7 +126,7 @@ public class ArrayDeque<Item> {
         nextLast = n;
     }
 
-    public Item get(int index) {
+    public T get(int index) {
         int indexInArray;
         int starter = nextFirst + 1;
         if (index > this.size - 1) {
