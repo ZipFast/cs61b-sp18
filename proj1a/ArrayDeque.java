@@ -113,7 +113,7 @@ public class ArrayDeque<T> {
         return item;
     }
 
-    public void resize(int capacity) {
+    private void resize(int capacity) {
         int n = arr.length;
         T[] a = (T[]) new Object[capacity];
         int pointer = 0;

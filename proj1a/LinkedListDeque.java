@@ -28,8 +28,9 @@ public class LinkedListDeque<T> {
             size += 1;
             return;
         }
+        InNode p = first.next;
         first.next = new InNode(first, item, first.next);
-        first.next.next.prev = first.next.next;
+        p.prev = first.next;
         size += 1;
     }
 
@@ -81,9 +82,9 @@ public class LinkedListDeque<T> {
             first.next = first;
             first.prev = first;
         } else {
-            InNode last = first.prev;
-            InNode preLast = last.prev;
-            preLast.next = last.next;
+            InNode preLast = first.prev.prev;
+            System.out.println(preLast.x);
+            preLast.next = first;
             first.prev = preLast;
         }
         size -= 1;
@@ -116,6 +117,6 @@ public class LinkedListDeque<T> {
             return helper(index - 1, p.next);
         }
     }
-
+    
 }
 
