@@ -41,7 +41,8 @@ public class Percolation {
             if (row == 0) {
                 uf.union(getIndex(row, col), head);
                 uf_without_tail.union(getIndex(row, col), head);
-            } else if (row == N - 1) {
+            }
+            if (row == N - 1) {
                 uf.union(getIndex(row, col), tail);
             }
             for (int k = 0; k < 4; k++) {

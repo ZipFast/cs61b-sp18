@@ -81,6 +81,6 @@ public class PercolationVisualizer {
     }
 
     public static void main(String[] args) {
-        simulateFromFile("C:\\Users\\123\\cs61b\\cs61b-sp18\\hw2\\inputFiles\\input20.txt");
+        simulateFromFile("C:\\Users\\123\\cs61b\\cs61b-sp18\\hw2\\inputFiles\\input2.txt");
     }
 }
