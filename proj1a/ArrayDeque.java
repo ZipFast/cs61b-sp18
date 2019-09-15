@@ -123,7 +123,8 @@ public class ArrayDeque<T> {
             a = (a + 1) % array.length;
         }
         first = 0;
-        last = array.length - 1;
+        last =  size;
         array = newArray;
     }
+
 }
