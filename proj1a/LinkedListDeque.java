@@ -1,44 +1,42 @@
 public class LinkedListDeque<T> {
-    private class InNode {
-        private InNode prev;
-        private T x;
-        private InNode next;
+    private int size;
+    private Node<T> sentinel;
 
-        public InNode(InNode prev, T x, InNode next) {
-            this.prev = prev;
-            this.x = x;
-            this.next = next;
+    private class Node<T> {
+        private T data;
+        private Node<T> pre, next;
+
+        public Node(T data) {
+            this.data = data;
+            pre = null;
+            next = null;
         }
     }
 
-    private InNode first;
-    private int size;
-
     public LinkedListDeque() {
-        first = new InNode(null, null, null);
-        first.prev = first;
-        first.next = first;
         size = 0;
+        sentinel = new Node<T>(null);
+        sentinel.pre = sentinel;
+        sentinel.next = sentinel;
     }
 
     public void addFirst(T item) {
-        if (size == 0) {
-            first.next = new InNode(first, item, first.next);
-            first.prev = first.next;
-            size += 1;
-            return;
-        }
-        InNode p = first.next;
-        first.next = new InNode(first, item, first.next);
-        p.prev = first.next;
         size += 1;
+        Node<T> node = new Node<T>(item);
+        sentinel.next.pre = node;
+        node.next = sentinel.next;
+        sentinel.next = node;
+        node.pre = sentinel;
     }
 
     public void addLast(T item) {
-        InNode last = first.prev;
-        last.next = new InNode(last, item, first);
-        first.prev = last.next;
         size += 1;
+        Node<T> last = sentinel.pre;
+        Node<T> node = new Node<T>(item);
+        last.next = node;
+        node.pre = last;
+        node.next = sentinel;
+        sentinel.pre = node;
     }
 
     public boolean isEmpty() {
@@ -50,73 +48,63 @@ public class LinkedListDeque<T> {
     }
 
     public void printDeque() {
-        InNode p = first.next;
-        while (p != first) {
-            System.out.print(p.x + " ");
+        Node<T> p = sentinel.next;
+        while (p != sentinel) {
+            System.out.print(p.data + " ");
             p = p.next;
-        } System.out.println();
+        }
     }
 
     public T removeFirst() {
-        if (first.next == null) {
+        Node<T> p = sentinel.next;
+        if (p == null) {
             return null;
         }
-        T res = first.next.x;
-        if (size == 1) {
-            first.next = first;
-            first.prev = first;
-        } else {
-            first.next = first.next.next;
-            first.next.prev = first.next;
-        }
+        T res = p.data;
+        sentinel.next = p.next;
+        p.next.pre = sentinel;
         size -= 1;
         return res;
     }
 
     public T removeLast() {
-        if (size == 0) {
+        Node<T> last = sentinel.pre;
+        if (last == null) {
             return null;
         }
-        T res = first.prev.x;
-        if (size == 1) {
-            first.next = first;
-            first.prev = first;
-        } else {
-            InNode preLast = first.prev.prev;
-            System.out.println(preLast.x);
-            preLast.next = first;
-            first.prev = preLast;
-        }
+        T res = last.data;
+        Node<T> pre = last.pre;
+        pre.next = sentinel;
+        sentinel.pre = pre;
         size -= 1;
         return res;
     }
 
     public T get(int index) {
-        if (index >= size) {
-            return null;
-        }
-        InNode p = first.next;
-        while (index != 0) {
+        int i = 0;
+        Node<T> p = sentinel.next;
+        while (p != sentinel) {
+            if (i == index) {
+                return p.data;
+            }
             p = p.next;
-            index--;
+            i += 1;
         }
-        return p.x;
+        return null;
     }
 
     public T getRecursive(int index) {
-        if (index >= size) {
+        Node<T> node = sentinel.next;
+        return helper(index, node);
+    }
+
+    private T helper(int index, Node<T> node) {
+        if (node == sentinel) {
             return null;
         }
-        return helper(index, first.next);
-    }
-
-    private T helper(int index, InNode p) {
         if (index == 0) {
-            return p.x;
-        } else {
-            return helper(index - 1, p.next);
+            return node.data;
         }
+        return helper(--index, node.next);
     }
-    
 }
-
